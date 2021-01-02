@@ -1,0 +1,27 @@
+创建镜像：
+docker build -t hong-prometheus .
+
+docker运行：
+docker run --name prometheus -p 9090:9090 hong-prometheus
+
+Docker Compose常用命令
+build	重新构建服务
+ps	列出容器
+up	创建和启动容器
+exec	在容器里面执行命令
+scale	指定一个服务容器启动数量
+top	显示容器进程
+logs	查看容器输出的日志文件
+down	删除容器、网络、数据卷和镜像
+stop/start/restart	停止/启动/重启服务
+
+docker ps;
+hongduoduo@localhost ~ % docker ps;
+CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS              PORTS                    NAMES
+deec35e4d43a        hong0220/hong-prometheus:0.0.1   "/bin/prometheus --c…"   6 minutes ago       Up 6 minutes        0.0.0.0:9090->9090/tcp   prometheus
+
+操作：
+docker start prometheus
+docker stop prometheus
+docker rm prometheus
+docker stats prometheus
