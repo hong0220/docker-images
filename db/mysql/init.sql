@@ -1,4 +1,5 @@
 use mysql;
+
 create database test;
 use test;
 create table user

@@ -21,10 +21,6 @@ docker stop cadvisor
 docker rm cadvisor
 docker rmi hong0220/hong-cadvisor:0.0.1
 
-docker stop mysql
-docker rm mysql
-docker rmi hong0220/hong-mysql:0.0.1
-
 docker stop mysqld-exporter
 docker rm mysqld-exporter
 docker rmi hong0220/hong-mysqld-exporter:0.0.1
@@ -48,10 +44,6 @@ cd ..
 
 cd cadvisor
 docker build -t hong0220/hong-cadvisor:0.0.1 .
-cd ..
-
-cd mysql
-docker build -t hong0220/hong-mysql:0.0.1 .
 cd ..
 
 cd mysqld-exporter
