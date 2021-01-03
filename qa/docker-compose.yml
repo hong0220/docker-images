@@ -30,33 +30,71 @@ services:
 #    networks:
 #      - monitor
 
-  gitlab:
-    image: gitclub/gitlab-ce-zh:10.0.6
-    container_name: gitlab
-    hostname: gitlab
-    privileged: true
+#  gitlab:
+#    image: gitclub/gitlab-ce-zh:10.0.6
+#    container_name: gitlab
+#    hostname: gitlab
+##    restart: always
+#    privileged: true
+#    environment:
+#      TZ: 'Asia/Shanghai'
+#      GITLAB_OMNIBUS_CONFIG: |
+#        external_url 'http://127.0.0.1'
+#        gitlab_rails['time_zone'] = 'Asia/Shanghai'
+#        gitlab_rails['smtp_enable'] = true
+#        gitlab_rails['smtp_address'] = "smtp.163.com"
+#        gitlab_rails['smtp_port'] = 25
+#        gitlab_rails['smtp_user_name'] = "xxx@163.com"
+#        gitlab_rails['smtp_password'] = "xxx"
+#        gitlab_rails['smtp_domain'] = "163.com"
+#        gitlab_rails['smtp_authentication'] = "login"
+#        gitlab_rails['smtp_enable_starttls_auto'] = true
+#        gitlab_rails['smtp_tls'] = true
+#        gitlab_rails['gitlab_email_from'] = 'xxx@163.com'
+#        gitlab_rails['git_user_email'] = 'xxx@163.com'
+#        gitlab_rails['gitlab_shell_ssh_port'] = 22
+#    ports:
+#      - '9999:80'
+##      - '8443:443'
+##      - '822:22'
+#    volumes:
+#      - /Users/hongduoduo/Desktop/soft/gitlab/config:/etc/gitlab
+#      - /Users/hongduoduo/Desktop/soft/gitlab/data:/var/opt/gitlab
+#      - /Users/hongduoduo/Desktop/soft/gitlab/logs:/var/log/gitlab
+#    networks:
+#      - monitor
+
+  yapi:
+    image: mrjin/yapi:latest
+    container_name: yapi
+    hostname: yapi
     environment:
-      TZ: 'Asia/Shanghai'
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://127.0.0.1'
-        gitlab_rails['time_zone'] = 'Asia/Shanghai'
-        gitlab_rails['smtp_enable'] = true
-        gitlab_rails['smtp_address'] = "smtp.163.com"
-        gitlab_rails['smtp_port'] = 25
-        gitlab_rails['smtp_user_name'] = "xxx@163.com"
-        gitlab_rails['smtp_password'] = "xxx"
-        gitlab_rails['smtp_domain'] = "163.com"
-        gitlab_rails['smtp_authentication'] = "login"
-        gitlab_rails['smtp_enable_starttls_auto'] = true
-        gitlab_rails['smtp_tls'] = true
-        gitlab_rails['gitlab_email_from'] = 'xxx@163.com'
-        gitlab_rails['git_user_email'] = 'xxx@163.com'
-        gitlab_rails['gitlab_shell_ssh_port'] = 22
+      - VERSION=1.5.6
+      - LOG_PATH=/tmp/yapi.log
+      - HOME=/home
+      - PORT=3000
+      - ADMIN_EMAIL=me@jinfeijie.cn
+      - DB_SERVER=mongo
+      - DB_NAME=yapi
+      - DB_PORT=27017
+    # restart: always
     ports:
-      - '9999:80'
-#      - '8443:443'
-#      - '822:22'
+      - 3000:3000
     volumes:
-      - /Users/hongduoduo/Desktop/soft/gitlab/config:/etc/gitlab
-      - /Users/hongduoduo/Desktop/soft/gitlab/data:/var/opt/gitlab
-      - /Users/hongduoduo/Desktop/soft/gitlab/logs:/var/log/gitlab
+      - /Users/hongduoduo/Desktop/soft/yapi/log/yapi.log:/home/vendors/log
+    depends_on:
+      - mongo
+    entrypoint: "bash /wait-for-it.sh mongo:27017 -- entrypoint.sh"
+    networks:
+      - monitor
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: gitlab
+    # restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - /Users/hongduoduo/Desktop/soft/yapi/mongodb:/data/db
+    networks:
+      - monitor
