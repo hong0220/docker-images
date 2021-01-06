@@ -1,7 +1,6 @@
-use mysql;
-
 create database test;
 use test;
+
 create table user
 (
     id int auto_increment primary key,
@@ -10,6 +9,7 @@ create table user
     password_hash varchar(128) not null,
     avatar varchar(128) not null
 );
+
 insert into user values(1, "zhangsan","test12345@qq.com","passwd","avaterpath");
 insert into user values(2, "lisi","12345test@qq.com","passwd","avaterpath");
 
