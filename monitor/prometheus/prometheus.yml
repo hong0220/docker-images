@@ -49,3 +49,10 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets: ['192.168.0.101:9104']
+
+  # spring cloud监控
+  - job_name: 'spring-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['192.168.0.101:8501','192.168.0.101:8503']
